@@ -1,10 +1,14 @@
 import tkinter as tk
+from tkinter import *
 from tkinter import messagebox
+from datetime import datetime
 
 def add_task():
     task = entry.get()
     if task:
-        listbox.insert(tk.END, task)
+        current_time = datetime.now().strftime("%Y-%m-%d")
+        task_with_time = f"{current_time} - {task}"
+        listbox.insert(tk.END, task_with_time)
         entry.delete(0, tk.END)
     else:
         messagebox.showwarning("Warning", "Please enter a task.")
@@ -24,27 +28,29 @@ def mark_completed():
     else:
         messagebox.showwarning("Warning", "Please select a task to mark as completed.")
 
-
 root = tk.Tk()
 root.title("To-Do List")
 
+root.geometry("600x600")
+  
+bg = PhotoImage( file = "9111374.png")
+  
+label1 = Label( root, image = bg)
+label1.place(x = -10,y = 0)
 
-listbox = tk.Listbox(root, selectmode=tk.SINGLE, bg='white')
-listbox.pack(padx=10, pady=10)
-
+listbox = tk.Listbox(root, selectmode=tk.SINGLE, bg='white', width=40, height=20, borderwidth=2, relief=tk.SOLID)
+listbox.pack(padx=80, pady=40)
 
 entry = tk.Entry(root)
-entry.pack(padx=10, pady=5)
-
+entry.pack(padx=90, pady=45)
 
 add_button = tk.Button(root, text="Add Task", command=add_task)
-add_button.pack(padx=10, pady=5)
+add_button.pack(padx=10, pady=5, side=tk.LEFT)
 
 remove_button = tk.Button(root, text="Remove Task", command=remove_task)
-remove_button.pack(padx=10, pady=5)
+remove_button.pack(padx=10, pady=5, side=tk.RIGHT)
 
 mark_button = tk.Button(root, text="Mark Completed", command=mark_completed)
-mark_button.pack(padx=10, pady=5)
-
+mark_button.pack(padx=10, pady=5, side=tk.RIGHT, anchor=tk.CENTER)
 
 root.mainloop()
